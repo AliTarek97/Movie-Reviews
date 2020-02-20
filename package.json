@@ -1,0 +1,25 @@
+{
+  "name": "movie_reviews",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/eslint src/server.js && nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.8",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.1",
+    "nodemon": "^2.0.2",
+    "validator": "^12.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}
