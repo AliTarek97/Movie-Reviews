@@ -23,7 +23,48 @@ const getReview = async (req , res) => {
 
 }
 
+const deleteReview = async (req , res) => {
+    try {
+        const review = await Review.findByIdAndDelete(req.params.id);
+        if(!review){
+            return res.status(400).send();
+        }
+        res.send(review);
+    } catch (error) {
+        res.status(500).send();
+    }
+}
+
+const updateReview = async (req , res) => {
+    const _id = req.params.id;
+    const updates = Object.keys(req.body);
+    const allowdUpdates = ['rate' , 'description' , 'title'];
+    const ValidUpdates = updates.every((update) => allowdUpdates.includes(update));
+
+    if( !ValidUpdates ) {
+        return res.status(400).send({error: 'Invalid Updates.'});
+    }
+
+    try {
+
+        const review = await Review.findById(_id);
+
+        if( !review ){
+            return res.status(404).send();
+        }
+        
+        updates.forEach((update) => review[update] = req.body[update]);
+        review.save();
+        res.send(review);
+
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
 module.exports = {
     addReview,
-    getReview
+    getReview,
+    deleteReview,
+    updateReview
 }

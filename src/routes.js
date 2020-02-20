@@ -1,28 +1,27 @@
 const express = require('express');
-const {signUp , login} = require('./controllers/user.controller');
-const 
-{   addMovie, 
-    getMovies , 
-    updateMovie ,
-    deleteMovie
-} = require('./controllers/movie.controller');
-const {addReview , getReview} = require('./controllers/review.controller');
+
+const userController = require('./controllers/user.controller');
+const movieController = require('./controllers/movie.controller');
+const reviewController = require('./controllers/review.controller');
+const auth = require('./controllers/auth.controller');
 
 const router = express.Router();
 
 //Users APIs
-router.post('/users/signup' , signUp);
-router.post('/users/login', login);
+router.post('/users/signup' , userController.signUp);
+router.post('/users/login', userController.login);
 
 //Movies APIs
-router.post('/movies' , addMovie);
-router.get('/movies' , getMovies);
-router.delete('/movies/:id' , deleteMovie);
-router.patch('/movies/:id', updateMovie);
+router.post('/movies' , auth, movieController.addMovie);
+router.get('/movies' , auth,  movieController.getMovies);
+router.delete('/movies/:id', auth, movieController.deleteMovie);
+router.patch('/movies/:id', auth, movieController.updateMovie);
 
 //Reviews APIs
-router.post('/reviews', addReview);
-router.get('/reviews', getReview);
+router.post('/reviews', auth, reviewController.addReview);
+router.get('/reviews', auth, reviewController.getReview);
+router.delete('/reviews/:id', auth, reviewController.deleteReview) ;
+router.patch('/reviews/:id', auth, reviewController.updateReview);
 
 
 module.exports = router;

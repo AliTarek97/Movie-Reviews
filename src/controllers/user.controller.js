@@ -5,7 +5,7 @@ const signUp = async (req , res) => {
 
     try{
         await user.save();
-        res.status(201).send(user);
+        res.status(201).send({user});
     } catch(error) {
         res.status(500).send(error.message);
     }

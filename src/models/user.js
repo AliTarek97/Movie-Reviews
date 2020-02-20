@@ -36,7 +36,7 @@ userSchema.methods.toJSON = function () {
 }
 
 userSchema.methods.generateAccessToken = async function () {
-    console.group('inside generateAccessToken');
+    console.log('inside generateAccessToken');
     const user = this;
     
     const token = jwt.sign({_id: user._id.toString()} , process.env.JWT_SECRET);
@@ -56,7 +56,6 @@ userSchema.statics.validateUser = async (email , password) => {
     }
 
     const theSame = await bcrypt.compare(password , user.password);
-    console.log(theSame);
     if(!theSame){
         throw new Error('Unable to login, Wrong password'); 
     }
