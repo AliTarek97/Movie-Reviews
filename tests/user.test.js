@@ -1,7 +1,5 @@
 const request = require('supertest');
 let server ;
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const User = require('../src/models/user');
 
 const userOne = {   
@@ -52,5 +50,26 @@ describe('Signup and login user' , () => {
         expect(user).not.toBeNull;
     
         expect(response.body.token).toBe(user.token)
+    })
+
+    it('should not signup a new user , valid email' ,  async () => {
+        await request(server)
+                .post('/api/users/signup')
+                .send({
+                    email: "ahmed.example.com",
+                    password: "123456"
+                })
+                .expect(500);
+    })
+
+    it('should login a user' ,  async () => {
+        await new User(userOne).save();
+        await request(server)
+                        .post('/api/users/login')
+                        .send({
+                            email: userOne.email,
+                            password: '444'
+                        })
+                        .expect(400);
     })
 })
