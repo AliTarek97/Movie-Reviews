@@ -62,14 +62,14 @@ describe('Signup and login user' , () => {
                 .expect(500);
     })
 
-    it('should login a user' ,  async () => {
+    it('should not login a user, Wrong password' ,  async () => {
         await new User(userOne).save();
         await request(server)
-                        .post('/api/users/login')
-                        .send({
-                            email: userOne.email,
-                            password: '444'
-                        })
-                        .expect(400);
+                .post('/api/users/login')
+                .send({
+                    email: userOne.email,
+                    password: '444'
+                })
+                .expect(400);
     })
 })

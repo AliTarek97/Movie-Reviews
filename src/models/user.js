@@ -40,7 +40,7 @@ userSchema.methods.generateAccessToken = async function () {
     const user = this;
     
     const token = jwt.sign({_id: user._id.toString()} , process.env.JWT_SECRET);
-    console.log(token);
+    //console.log(token);
     user.token = token;
     await user.save();
 
@@ -50,6 +50,7 @@ userSchema.methods.generateAccessToken = async function () {
 userSchema.statics.validateUser = async (email , password) => {
     console.log('inside validateuser')
     const user = await User.findOne({ email });
+    console.log('validate: ',user);
 
     if(!user){
         throw new Error('Unable to login, Email is not found.')

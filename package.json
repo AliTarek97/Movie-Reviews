@@ -6,11 +6,10 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "./node_modules/.bin/eslint src/server.js && nodemon src/server.js",
-    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand --coverage"
   },
   "jest": {
-    "testEnvironment": "node",
-    "testTimeout":30000
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
