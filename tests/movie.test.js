@@ -2,6 +2,7 @@ const request = require('supertest');
 let server ;
 const Movie = require('../src/models/movie');
 const User = require('../src/models/user');
+const Review = require('../src/models/review');
 const mongoose = require('mongoose');
 
 const userOne = {   
@@ -15,6 +16,13 @@ const movieOne = {
 	genre: "comedy",
 	year: "2018",
 	actors: ["actor 3" , "actor 4"]
+}
+
+ const reviewOne = {
+	movieId: movieOne._id,
+	rate: 4,
+	description: "description3",
+	title: "title3"
 }
 
 beforeEach(async () => { 
@@ -59,6 +67,18 @@ describe('Testing all CRUD operations on Movie' , () => {
                 .get('/api/movies')
                 .set('Authorization' , `Bearer ${token}`)
                 .expect(200);
+    })
+
+    it('Should read a movie with some reviews on it' , async () => {
+        const token = await new User(userOne).generateAccessToken();
+        await new Movie(movieOne).save();
+        await new Review(reviewOne).save();
+        const response = await request(server)
+                .get('/api/movies')
+                .set('Authorization' , `Bearer ${token}`)
+                .expect(200);
+        console.log(response.body);
+        expect(response.body[0].reviews.length).not.toBe(0);
     })
 
     it('Should not read a movie for unauthenticated user' , async () => {
