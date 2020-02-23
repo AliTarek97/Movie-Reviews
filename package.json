@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node src/server.js",
+    "start": "node src/server.js",
     "dev": "./node_modules/.bin/eslint src/server.js && nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout":30000
   },
   "keywords": [],
   "author": "",
@@ -21,6 +25,9 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "env-cmd": "^10.1.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
   }
 }
